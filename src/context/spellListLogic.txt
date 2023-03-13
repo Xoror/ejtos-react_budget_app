@@ -1,0 +1,56 @@
+/*
+ Works Well for Sorcerers, Warlocks, Rangers etc, not like Duids, Artificers, Clerics
+*/
+case "SPELL_PREPARATION":
+	action.type = "Done"
+	if(action.payload[1]) {
+		if(state.spells.filter(spell => {return spell.name === action.payload[0]}).length === 0) {
+			let spell = state.sortedSpellList.filter(spell => {return spell.name === action.payload[0]})[0]
+			state.spells.push(spell)
+			spell.isPrepared = true
+			let slots = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th"]
+			let test1 = slots.indexOf(spell.type)
+			let test2 = slots.indexOf(state.casting.highestSpellSlot)
+			if(test1 > test2) {
+				state.casting.highestSpellSlot = slots[test1]
+			}
+		}
+		else {
+			state.spells.filter(spell => {return spell.name === action.payload[0]})[0].isPrepared = action.payload[1]
+		}
+	}
+	else {
+		if(true) {
+			let test = state.spells.filter(spell => {return spell.name === action.payload[0]})[0]
+			test.isPrepared=false
+			let index = state.spells.indexOf(test)
+			let bla = structuredClone(state.spells)
+			state.spells = bla.slice(0, index).concat(bla.slice(index + 1))
+			
+			
+			var slots = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th"]
+			var maxIndex = slots.indexOf(state.casting.highestSpellSlot)
+			
+			for(let i=maxIndex; i>=0; i--) {
+				if(i > 0) {
+					if( state.spells.filter(spell => {return spell.type === slots[i]}).length === 0) {
+					}
+					else {
+						state.casting.highestSpellSlot = slots[i]
+						break
+					}
+				}
+				else {
+					state.casting.highestSpellSlot = slots[i]
+					break
+				}
+			}
+		}
+		else {
+			let test = state.spells.filter(spell => {return spell.name === action.payload[0]})[0]
+			test.isPrepared=false
+		}
+	}
+	return {
+		...state,
+	}

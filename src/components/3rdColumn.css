@@ -1,0 +1,32 @@
+.prepared-check input[type="checkbox"] {
+	/* removing default appearance */
+	-webkit-appearance: none;
+	appearance: none;
+	/* creating a custom design */
+	width: 1.2em;
+	height: 1.2em;
+	border-radius: 1.2em;
+	border: 0.15em solid #000000;
+	outline: none;
+	cursor: pointer;
+	margin-top: 4px;
+}
+
+.prepared-check input[type="checkbox"]:checked {
+	background-color: #51585e;
+	position: relative;
+	;
+}
+.prepared-check input[type="checkbox"]:hover {
+	background-color: #858c925;
+	border: 0.15em solid lightgrey;
+}
+.prepared-check input[type="checkbox"]:checked::before {
+	content: "P";
+	font-size: 0.8em;
+	color: #ffffff;
+	position: absolute;
+	right: 4px;
+	top: -3.5px;
+	/*align-content: auto;*/
+}
